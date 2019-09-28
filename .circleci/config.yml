@@ -1,0 +1,45 @@
+version: 2.1
+
+jobs:
+  test-3.7:
+    docker:
+      - image: circleci/python:3.7
+    steps: &steps
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install tox tox-pyenv
+            pyenv global 3.7.0 3.6.0 3.5.0
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            tox -p 4
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
+  test-3.6:
+    docker:
+      - image: circleci/python:3.6
+    steps: *steps
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test-3.7
+      - test-3.6
+      - test-3.5
