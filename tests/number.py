@@ -27,14 +27,14 @@ class NumberTestCase(HumanizeTestCase):
         # make sure that powers & human_powers have the same number of items
         self.assertEqual(len(number.powers), len(number.human_powers))
         # test the result of intword
-        test_list = ('100', '1000000', '1200000', '1290000', '1000000000',
-            '2000000000', '6000000000000', '1300000000000000',
+        test_list = ('100', '1000000', '1200000', '1290000', '999999999',
+            '1000000000', '2000000000', '6000000000000', '1300000000000000',
             '3500000000000000000000', '8100000000000000000000000000000000',
             None, ('1230000', '%0.2f'), 10**101)
         result_list = ('100', '1.0 million', '1.2 million', '1.3 million',
-           '1.0 billion', '2.0 billion', '6.0 trillion', '1.3 quadrillion',
-           '3.5 sextillion', '8.1 decillion', None, '1.23 million',
-           '1'+'0'*101)
+            '1.0 billion', '1.0 billion', '2.0 billion', '6.0 trillion',
+            '1.3 quadrillion', '3.5 sextillion', '8.1 decillion', None,
+            '1.23 million', '1'+'0'*101)
         self.assertManyResults(number.intword, test_list, result_list)
 
     def test_apnumber(self):
