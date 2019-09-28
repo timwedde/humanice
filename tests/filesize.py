@@ -3,10 +3,10 @@
 
 """Tests for filesize humanizing."""
 
-from humanize import filesize
-from .base import HumanizeTestCase
+from humanice import filesize
+from .base import HumaniceTestCase
 
-class FilesizeTestCase(HumanizeTestCase):
+class FilesizeTestCase(HumaniceTestCase):
     def test_naturalsize(self):
         tests = (300, 3000, 3000000, 3000000000, 3000000000000, (300, True),
             (3000, True), (3000000, True), (300, False, True), (3000, False, True),

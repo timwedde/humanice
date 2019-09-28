@@ -5,9 +5,9 @@
 
 from unittest.mock import patch
 
-from humanize import time
+from humanice import time
 from datetime import date, datetime, timedelta
-from .base import HumanizeTestCase
+from .base import HumaniceTestCase
 
 today = date.today()
 one_day = timedelta(days=1)
@@ -16,7 +16,7 @@ class fakedate(object):
     def __init__(self, year, month, day):
         self.year, self.month, self.day = year, month, day
 
-class TimeUtilitiesTestCase(HumanizeTestCase):
+class TimeUtilitiesTestCase(HumaniceTestCase):
     """These are not considered "public" interfaces, but require tests anyway."""
     def test_date_and_delta(self):
         now = datetime.now()
@@ -32,8 +32,8 @@ class TimeUtilitiesTestCase(HumanizeTestCase):
                 self.assertEqualTimedelta(d, result[1])
         self.assertEqual(time.date_and_delta("NaN"), (None, "NaN"))
 
-class TimeTestCase(HumanizeTestCase):
-    """Tests for the public interface of humanize.time"""
+class TimeTestCase(HumaniceTestCase):
+    """Tests for the public interface of humanice.time"""
 
     def test_naturaldelta_nomonths(self):
         now = datetime.now()
@@ -49,7 +49,7 @@ class TimeTestCase(HumanizeTestCase):
             '230 days',
             '1 year, 35 days',
         ]
-        with patch('humanize.time._now') as mocked:
+        with patch('humanice.time._now') as mocked:
             mocked.return_value = now
             nd_nomonths = lambda d: time.naturaldelta(d, months=False)
             self.assertManyResults(nd_nomonths, test_list, result_list)
@@ -76,7 +76,7 @@ class TimeTestCase(HumanizeTestCase):
             timedelta(days=1),
             timedelta(days=500),
             timedelta(days=365*2 + 35),
-            # regression tests for bugs in post-release humanize
+            # regression tests for bugs in post-release humanice
             timedelta(days=10000),
             timedelta(days=365+35),
             30,
@@ -119,7 +119,7 @@ class TimeTestCase(HumanizeTestCase):
             'a year',
             "NaN",
         ]
-        with patch('humanize.time._now') as mocked:
+        with patch('humanice.time._now') as mocked:
             mocked.return_value = now
             self.assertManyResults(time.naturaldelta, test_list, result_list)
 
@@ -145,7 +145,7 @@ class TimeTestCase(HumanizeTestCase):
             now + timedelta(days=1),
             now + timedelta(days=500),
             now + timedelta(days=365*2 + 35),
-            # regression tests for bugs in post-release humanize
+            # regression tests for bugs in post-release humanice
             now + timedelta(days=10000),
             now - timedelta(days=365+35),
             30,
@@ -180,7 +180,7 @@ class TimeTestCase(HumanizeTestCase):
             '1 year, 4 days ago',
             "NaN",
         ]
-        with patch('humanize.time._now') as mocked:
+        with patch('humanice.time._now') as mocked:
             mocked.return_value = now
             self.assertManyResults(time.naturaltime, test_list, result_list)
 
@@ -208,7 +208,7 @@ class TimeTestCase(HumanizeTestCase):
             now + timedelta(days=1),
             now + timedelta(days=500),
             now + timedelta(days=365*2 + 35),
-            # regression tests for bugs in post-release humanize
+            # regression tests for bugs in post-release humanice
             now + timedelta(days=10000),
             now - timedelta(days=365+35),
             30,
@@ -245,7 +245,7 @@ class TimeTestCase(HumanizeTestCase):
             '1 year, 4 days ago',
             "NaN",
         ]
-        with patch('humanize.time._now') as mocked:
+        with patch('humanice.time._now') as mocked:
             mocked.return_value = now
             nt_nomonths = lambda d: time.naturaltime(d, months=False)
             self.assertManyResults(nt_nomonths, test_list, result_list)

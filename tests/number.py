@@ -3,10 +3,10 @@
 
 """Number tests."""
 
-from humanize import number
-from .base import HumanizeTestCase
+from humanice import number
+from .base import HumaniceTestCase
 
-class NumberTestCase(HumanizeTestCase):
+class NumberTestCase(HumaniceTestCase):
 
     def test_ordinal(self):
         test_list = ('1', '2', '3', '4', '11', '12', '13', '101', '102', '103',

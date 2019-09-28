@@ -4,32 +4,46 @@
 """Setup script for humanize."""
 
 import os
-import io
+import re
 import sys
 from setuptools import setup, find_packages
 
-version = '0.5.1'
+here = os.path.abspath(os.path.dirname(__file__))
+
+
+def read(*parts):
+    with open(os.path.join(here, *parts), "r") as fp:
+        return fp.read()
+
+
+def find_version(*file_paths):
+    version_file = read(*file_paths)
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string.")
+
 
 setup(
-    name='humanize',
-    version=version,
-    description="python humanize utilities",
-    long_description=io.open('README.rst', 'r', encoding="UTF-8").read(),
+    name="humanice",
+    version=find_version("humanice", "__init__.py"),
+    description="Python humanization utilities.",
+    long_description=open("README.md", "r", encoding="UTF-8").read(),
     # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: POSIX',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python',
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: POSIX",
+        "Programming Language :: Python :: 3",
     ],
-    keywords='humanize time size',
-    author='Jason Moiron',
-    author_email='jmoiron@jmoiron.net',
-    url='http://github.com/jmoiron/humanize',
-    license='MIT',
-    packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
+    keywords="humanize time size",
+    author="Tim Wedde",
+    author_email="timwedde@icloud.com",
+    url="http://github.com/timwedde/humanice",
+    license="MIT",
+    packages=find_packages(exclude=["tests"]),
     include_package_data=True,
     zip_safe=False,
     test_suite="tests",
