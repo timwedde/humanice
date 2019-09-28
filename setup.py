@@ -3,14 +3,12 @@
 
 """Setup script for humanize."""
 
-from setuptools import setup, find_packages
-import sys, os
+import os
 import io
+import sys
+from setuptools import setup, find_packages
 
 version = '0.5.1'
-
-# some trove classifiers:
-
 
 setup(
     name='humanize',
@@ -29,7 +27,6 @@ setup(
     keywords='humanize time size',
     author='Jason Moiron',
     author_email='jmoiron@jmoiron.net',
-
     url='http://github.com/jmoiron/humanize',
     license='MIT',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
@@ -38,9 +35,9 @@ setup(
     test_suite="tests",
     tests_require=[],
     install_requires=[
-      # -*- Extra requirements: -*-
+        # -*- Extra requirements: -*-
     ],
     entry_points="""
-    # -*- Entry points: -*-
+        # -*- Entry points: -*-
     """,
 )
