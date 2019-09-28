@@ -50,6 +50,7 @@ def intcomma(value):
     else:
         return intcomma(new)
 
+
 powers = [10 ** x for x in (6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 100)]
 human_powers = (N_('million'), N_('billion'), N_('trillion'), N_('quadrillion'),
                 N_('quintillion'), N_('sextillion'), N_('septillion'),
@@ -57,12 +58,14 @@ human_powers = (N_('million'), N_('billion'), N_('trillion'), N_('quadrillion'),
 
 
 def intword(value, format='%.1f'):
-    """Converts a large integer to a friendly text representation. Works best for
+    """
+    Converts a large integer to a friendly text representation. Works best for
     numbers over 1 million. For example, 1000000 becomes '1.0 million', 1200000
     becomes '1.2 million' and '1200000000' becomes '1.2 billion'.  Supports up to
     decillion (33 digits) and googol (100 digits).  You can pass format to change
     the number of decimal or general format of the number portion.  This function
-    returns a string unless the value passed was unable to be coaxed into an int."""
+    returns a string unless the value passed was unable to be coaxed into an int.
+    """
     try:
         value = int(value)
     except (TypeError, ValueError):
@@ -77,14 +80,17 @@ def intword(value, format='%.1f'):
                 chopped = value / float(powers[ordinal])
                 return (' '.join([format, _(human_powers[ordinal])])) % chopped
             else:
-                return (' '.join([format, _(human_powers[ordinal - 1])])) % chopped
+                return (' '.join([format,
+                                  _(human_powers[ordinal - 1])])) % chopped
     return str(value)
 
 
 def apnumber(value):
-    """For numbers 1-9, returns the number spelled out. Otherwise, returns the
+    """
+    For numbers 1-9, returns the number spelled out. Otherwise, returns the
     number. This follows Associated Press style.  This always returns a string
-    unless the value was not int-able, unlike the Django filter."""
+    unless the value was not int-able, unlike the Django filter.
+    """
     try:
         value = int(value)
     except (TypeError, ValueError):
@@ -96,7 +102,7 @@ def apnumber(value):
 
 
 def fractional(value):
-    '''
+    """
     There will be some cases where one might not want to show
         ugly decimal places for floats and decimals.
     This function returns a human readable fractional number
@@ -111,7 +117,7 @@ def fractional(value):
         fractional(float(1/3)) will return '1/3'
         fractional(1) will return '1'
     This will always return a string.
-    '''
+    """
     try:
         number = float(value)
     except (TypeError, ValueError):
@@ -121,14 +127,17 @@ def fractional(value):
     numerator = frac._numerator
     denominator = frac._denominator
     if wholeNumber and not numerator and denominator == 1:
-        return '%.0f' % wholeNumber  # this means that an integer was passed in (or variants of that integer like 1.0000)
+        # this means that an integer was passed in (or variants of that integer
+        # like 1.0000)
+        return '%.0f' % wholeNumber
     elif not wholeNumber:
         return '%.0f/%.0f' % (numerator, denominator)
     else:
         return '%.0f %.0f/%.0f' % (wholeNumber, numerator, denominator)
 
-def scientific(value,precision=2):
-    '''
+
+def scientific(value, precision=2):
+    """
     Return number in string scientific notation z.wq x 10ⁿ
     Examples:
         float(0.3) will return '3.00 x 10⁻¹'
@@ -136,7 +145,7 @@ def scientific(value,precision=2):
     This will always return a string.
 
     :param precision int : Number of decimal for first par number
-    '''
+    """
     exponents = {
         "0": "⁰",
         "1": "¹",
@@ -162,8 +171,8 @@ def scientific(value,precision=2):
     except (ValueError, TypeError):
         return value
     part1, part2 = n.split("e")
-    if "-0" in part2 :
-        part2 = part2.replace("-0","-")
+    if "-0" in part2:
+        part2 = part2.replace("-0", "-")
     if "+0" in part2:
         part2 = part2.replace("+0", "")
     new_part2 = []
