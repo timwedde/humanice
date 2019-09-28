@@ -1,99 +1,140 @@
-humanice
-========
+# humanice
 
-This modest package contains various common humanization utilities, like
-turning a number into a fuzzy human readable duration (\'3 minutes
-ago\') or into a human readable size or throughput. It works with Python 3
- and is localized to Russian, French, Korean, Slovak, and Finnish.
+This modest package contains various common humanization utilities, like turning a number into a fuzzy human readable duration (i.e. `3 minutes ago`) or into a human readable size or throughput. It works with Python 3 and is localized to a bunch of languages.
 
-usage
-=====
 
-Integer humanization:
+## Installation
 
-    >>> import humanize
-    >>> humanize.intcomma(12345)
-    '12,345'
-    >>> humanize.intword(123455913)
-    '123.5 million'
-    >>> humanize.intword(12345591313)
-    '12.3 billion'
-    >>> humanize.apnumber(4)
-    'four'
-    >>> humanize.apnumber(41)
-    '41'
+`humanice` can be installed via pip:
+```bash
+$ pip install humanice
+```
 
-Date & time humanization:
+Alternatively you can build the package by cloning this repository:
+```bash
+$ git clone https://github.com/timwedde/humanice.git
+$ cd humanice/
+$ python3 setupy.py install
+```
 
-    >>> import datetime
-    >>> humanize.naturalday(datetime.datetime.now())
-    'today'
-    >>> humanize.naturaldelta(datetime.timedelta(seconds=1001))
-    '16 minutes'
-    >>> humanize.naturalday(datetime.datetime.now() - datetime.timedelta(days=1))
-    'yesterday'
-    >>> humanize.naturalday(datetime.date(2007, 6, 5))
-    'Jun 05'
-    >>> humanize.naturaldate(datetime.date(2007, 6, 5))
-    'Jun 05 2007'
-    >>> humanize.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=1))
-    'a second ago'
-    >>> humanize.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=3600))
-    'an hour ago'
+## Usage
 
-Filesize humanization:
+### Integer humanization
 
-    >>> humanize.naturalsize(1000000)
-    '1.0 MB'
-    >>> humanize.naturalsize(1000000, binary=True)
-    '976.6 KiB'
-    >>> humanize.naturalsize(1000000, gnu=True)
-    '976.6K'
+```python
+>>> import humanice
+>>> humanice.intcomma(12345)
+'12,345'
+>>> humanice.intword(123455913)
+'123.5 million'
+>>> humanice.intword(12345591313)
+'12.3 billion'
+>>> humanice.apnumber(4)
+'four'
+>>> humanice.apnumber(41)
+'41'
+```
 
-Human readable floating point numbers:
+### Date & time humanization
 
-    >>> humanize.fractional(1/3)
-    '1/3'
-    >>> humanize.fractional(1.5)
-    '1 1/2'
-    >>> humanize.fractional(0.3)
-    '3/10'
-    >>> humanize.fractional(0.333)
-    '1/3'
-    >>> humanize.fractional(1)
-    '1'
+```python
+>>> import datetime
+>>> humanice.naturalday(datetime.datetime.now())
+'today'
+>>> humanice.naturaldelta(datetime.timedelta(seconds=1001))
+'16 minutes'
+>>> humanice.naturalday(datetime.datetime.now() - datetime.timedelta(days=1))
+'yesterday'
+>>> humanice.naturalday(datetime.date(2007, 6, 5))
+'Jun 05'
+>>> humanice.naturaldate(datetime.date(2007, 6, 5))
+'Jun 05 2007'
+>>> humanice.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=1))
+'a second ago'
+>>> humanice.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=3600))
+'an hour ago'
+```
 
-Localization
-============
+### Filesize humanization
 
-How to change locale in runtime :
+```python
+>>> humanice.naturalsize(1000000)
+'1.0 MB'
+>>> humanice.naturalsize(1000000, binary=True)
+'976.6 KiB'
+>>> humanice.naturalsize(1000000, gnu=True)
+'976.6K'
+```
 
-    >>> print(humanize.naturaltime(datetime.timedelta(seconds=3)))
-    3 seconds ago
-    >>> _t = humanize.i18n.activate('ru_RU')
-    >>> print(humanize.naturaltime(datetime.timedelta(seconds=3)))
-    3 секунды назад
-    >>> humanize.i18n.deactivate()
-    >>> print(humanize.naturaltime(datetime.timedelta(seconds=3)))
-    3 seconds ago
+### Human-readable floating point numbers
 
-You can pass additional parameter *path* to `activate`{.interpreted-text
-role="func"} to specify a path to search locales in. :
+```python
+>>> humanice.fractional(1/3)
+'1/3'
+>>> humanice.fractional(1.5)
+'1 1/2'
+>>> humanice.fractional(0.3)
+'3/10'
+>>> humanice.fractional(0.333)
+'1/3'
+>>> humanice.fractional(1)
+'1'
+```
 
-    >>> humanize.i18n.activate('pt_BR')
-    IOError: [Errno 2] No translation file found for domain: 'humanize'
-    >>> humanize.i18n.activate('pt_BR', path='path/to/my/portuguese/translation/')
-    <gettext.GNUTranslations instance ...>
+## Localization
 
-How to add new phrases to existing locale files :
+### How to change locale in runtime
 
-    $ xgettext -o humanize.pot -k'_' -k'N_' -k'P_:1c,2' -l python humanize/*.py  # extract new phrases
-    $ msgmerge -U humanize/locale/ru_RU/LC_MESSAGES/humanize.po humanize.pot # add them to locale files
-    $ msgfmt --check -o humanize/locale/ru_RU/LC_MESSAGES/humanize{.mo,.po} # compile to binary .mo
+```python
+>>> humanice.naturaltime(datetime.timedelta(seconds=3))
+3 seconds ago
+>>> _t = humanice.i18n.activate('ru_RU')
+>>> humanice.naturaltime(datetime.timedelta(seconds=3))
+3 секунды назад
+>>> humanice.i18n.deactivate()
+>>> humanice.naturaltime(datetime.timedelta(seconds=3))
+3 seconds ago
+```
 
-How to add new locale :
+You can pass additional parameter *path* to `activate` to specify a path to search locales in:
 
-    $ msginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
+```python
+>>> humanice.i18n.activate('pt_BR')
+IOError: [Errno 2] No translation file found for domain: 'humanice'
+>>> humanice.i18n.activate('pt_BR', path='path/to/my/portuguese/translation/')
+<gettext.GNUTranslations instance ...>
+```
 
-Where \<locale name\> is locale abbreviation, eg \'en\_GB\', \'pt\_BR\'
-or just \'ru\', \'fr\' etc.
+### How to add new phrases to existing locale files
+
+```bash
+$ xgettext -o humanice.pot -k'_' -k'N_' -k'P_:1c,2' -l python humanice/*.py  # extract new phrases
+$ msgmerge -U humanice/locale/ru_RU/LC_MESSAGES/humanice.po humanice.pot # add them to locale files
+$ msgfmt --check -o humanice/locale/ru_RU/LC_MESSAGES/humanice{.mo,.po} # compile to binary .mo
+```
+
+### How to add a new locale
+
+```bash
+$ msginit -i humanice.pot -o humanice/locale/<locale name>/LC_MESSAGES/humanice.po --locale <locale name>
+```
+
+Where `<locale name>` is locale abbreviation, eg `en_GB`, `pt_BR` or just `ru`, `fr` etc.
+
+
+## Supported Languages
+
+* German
+* Finnish
+* French
+* Indonesian
+* Italian
+* Japanese
+* Korean
+* Dutch
+* Portugese
+* Russian
+* Slovak
+* Turkish
+* Vietnamese
+* Simplified Chinese
