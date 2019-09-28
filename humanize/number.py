@@ -155,8 +155,7 @@ def scientific(value,precision=2):
             negative = True
         if isinstance(value, str):
             value = float(value)
-        fmt = '{:.%se}' % str(int(precision))
-        n = fmt.format(value)
+        n = '{:.{precision}e}'.format(value, precision=int(precision))
     except (ValueError, TypeError):
         return value
     part1, part2 = n.split("e")
