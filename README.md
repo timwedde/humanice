@@ -1,18 +1,18 @@
 humanize
---------
+========
 
-.. image:: https://secure.travis-ci.org/jmoiron/humanize.png?branch=master
-  :target: http://travis-ci.org/jmoiron/humanize
+[![image](https://secure.travis-ci.org/jmoiron/humanize.png?branch=master)](http://travis-ci.org/jmoiron/humanize)
 
-This modest package contains various common humanization utilities, like turning
-a number into a fuzzy human readable duration ('3 minutes ago') or into a human
-readable size or throughput.  It works with python 2.7 and 3.3 and is localized
-to Russian, French, Korean, Slovak, and Finnish.
+This modest package contains various common humanization utilities, like
+turning a number into a fuzzy human readable duration (\'3 minutes
+ago\') or into a human readable size or throughput. It works with python
+2.7 and 3.3 and is localized to Russian, French, Korean, Slovak, and
+Finnish.
 
 usage
------
+=====
 
-Integer humanization::
+Integer humanization:
 
     >>> import humanize
     >>> humanize.intcomma(12345)
@@ -26,7 +26,7 @@ Integer humanization::
     >>> humanize.apnumber(41)
     '41'
 
-Date & time humanization::
+Date & time humanization:
 
     >>> import datetime
     >>> humanize.naturalday(datetime.datetime.now())
@@ -44,7 +44,7 @@ Date & time humanization::
     >>> humanize.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=3600))
     'an hour ago'
 
-Filesize humanization::
+Filesize humanization:
 
     >>> humanize.naturalsize(1000000)
     '1.0 MB'
@@ -53,8 +53,7 @@ Filesize humanization::
     >>> humanize.naturalsize(1000000, gnu=True)
     '976.6K'
 
-
-Human readable floating point numbers::
+Human readable floating point numbers:
 
     >>> humanize.fractional(1/3)
     '1/3'
@@ -68,9 +67,9 @@ Human readable floating point numbers::
     '1'
 
 Localization
-------------
+============
 
-How to change locale in runtime ::
+How to change locale in runtime :
 
     >>> print(humanize.naturaltime(datetime.timedelta(seconds=3)))
     3 seconds ago
@@ -81,22 +80,23 @@ How to change locale in runtime ::
     >>> print(humanize.naturaltime(datetime.timedelta(seconds=3)))
     3 seconds ago
 
-You can pass additional parameter *path* to :func:`activate` to specify a path to
-search locales in. ::
+You can pass additional parameter *path* to `activate`{.interpreted-text
+role="func"} to specify a path to search locales in. :
 
     >>> humanize.i18n.activate('pt_BR')
     IOError: [Errno 2] No translation file found for domain: 'humanize'
     >>> humanize.i18n.activate('pt_BR', path='path/to/my/portuguese/translation/')
     <gettext.GNUTranslations instance ...>
 
-How to add new phrases to existing locale files ::
+How to add new phrases to existing locale files :
 
     $ xgettext -o humanize.pot -k'_' -k'N_' -k'P_:1c,2' -l python humanize/*.py  # extract new phrases
     $ msgmerge -U humanize/locale/ru_RU/LC_MESSAGES/humanize.po humanize.pot # add them to locale files
     $ msgfmt --check -o humanize/locale/ru_RU/LC_MESSAGES/humanize{.mo,.po} # compile to binary .mo
 
-How to add new locale ::
+How to add new locale :
 
     $ msginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
 
-Where <locale name> is locale abbreviation, eg 'en_GB', 'pt_BR' or just 'ru', 'fr' etc.
+Where \<locale name\> is locale abbreviation, eg \'en\_GB\', \'pt\_BR\'
+or just \'ru\', \'fr\' etc.
