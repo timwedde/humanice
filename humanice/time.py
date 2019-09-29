@@ -69,11 +69,13 @@ def naturaldelta(value, months=True):
         elif microseconds == 1:
             return _("a microsecond")
         elif microseconds < 1000:
-            return ngettext("%d microsecond", "%d microseconds", microseconds) % microseconds
+            return ngettext("%d microsecond", "%d microseconds",
+                            microseconds) % microseconds
         elif milliseconds == 1:
             return _("a millisecond")
         else:
-            return ngettext("%d millisecond", "%d milliseconds", milliseconds) % milliseconds
+            return ngettext("%d millisecond", "%d milliseconds",
+                            milliseconds) % milliseconds
     elif not years and days < 1:
         if seconds == 1:
             return _("a second")
