@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "humanice"
-version = "1.0.1"
+version = "1.0.2"
 description = "Nice humanize functions for Python"
 authors = ["Tim Wedde <timwedde@icloud.com>"]
 license = "MIT"
