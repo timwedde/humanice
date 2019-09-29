@@ -10,8 +10,8 @@ from datetime import datetime, timedelta, date
 __all__ = ['naturaldelta', 'naturaltime', 'naturalday', 'naturaldate']
 
 
-def _now():
-    return datetime.now()
+def _now(tzinfo=None):
+    return datetime.now(tz=tzinfo)
 
 
 def abs_timedelta(delta):
@@ -28,6 +28,7 @@ def date_and_delta(value):
     it was.  If that's not possible, return (None, value)."""
     now = _now()
     if isinstance(value, datetime):
+        now = _now(value.tzinfo)
         date = value
         delta = now - value
     elif isinstance(value, timedelta):
@@ -39,8 +40,8 @@ def date_and_delta(value):
             delta = timedelta(seconds=value)
             date = now - delta
         except (ValueError, TypeError):
-            return (None, value)
-    return date, abs_timedelta(delta)
+            return (now, None, value)
+    return now, date, abs_timedelta(delta)
 
 
 def naturaldelta(value, months=True):
@@ -49,7 +50,7 @@ def naturaldelta(value, months=True):
     ``naturaltime``, but does not add tense to the result.  If ``months``
     is True, then a number of months (based on 30.5 days) will be used
     for fuzziness between years."""
-    date, delta = date_and_delta(value)
+    now, date, delta = date_and_delta(value)
     if date is None:
         return value
 
@@ -127,8 +128,7 @@ def naturaltime(value, future=False, months=True):
     datetimes, where the tense is always figured out based on the current time.
     If an integer is passed, the return value will be past tense by default,
     unless ``future`` is set to True."""
-    now = _now()
-    date, delta = date_and_delta(value)
+    now, date, delta = date_and_delta(value)
     if date is None:
         return value
     # determine tense by value only if datetime/timedelta were passed

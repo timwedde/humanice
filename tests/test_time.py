@@ -32,10 +32,11 @@ class TimeUtilitiesTestCase(HumaniceTestCase):
         results = [(now - td(seconds=x), td(seconds=x)) for x in int_tests]
         for t in (int_tests, date_tests, td_tests):
             for arg, result in zip(t, results):
-                dt, d = time.date_and_delta(arg)
+                _, dt, d = time.date_and_delta(arg)
                 self.assertEqualDatetime(dt, result[0])
                 self.assertEqualTimedelta(d, result[1])
-        self.assertEqual(time.date_and_delta("NaN"), (None, "NaN"))
+        _, dt, d = time.date_and_delta("NaN")
+        self.assertEqual((dt, d), (None, "NaN"))
 
 
 class TimeTestCase(HumaniceTestCase):
