@@ -4,3 +4,5 @@ ignore =
     # Star imports
     F403,
     F405,
+    # Lambdas
+    E731,

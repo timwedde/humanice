@@ -7,15 +7,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install
+          name: "Install into environment"
           command: |
             poetry install
       - run:
-          name: Lint
+          name: "Lint library and tests"
           command: |
-            poetry run flake8 humanice
+            poetry run flake8 humanice tests
       - run:
-          name: "Test and Coverage"
+          name: "Run unit tests and coverage"
           command: |
             poetry run coverage run --branch --source humanice -m pytest
             poetry run codecov -t "${CODECOV_TOKEN}"

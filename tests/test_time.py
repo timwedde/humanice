@@ -3,11 +3,12 @@
 
 """Tests for time humanizing."""
 
-from unittest.mock import patch
 
 from humanice import time
-from datetime import date, datetime, timedelta
+from unittest.mock import patch
+from collections import namedtuple
 from .base import HumaniceTestCase
+from datetime import date, datetime, timedelta
 
 today = date.today()
 one_day = timedelta(days=1)
@@ -268,13 +269,10 @@ class TimeTestCase(HumaniceTestCase):
         overflowtest = fakedate(120390192341, 2, 2)
         test_list = (today, tomorrow, yesterday, someday, '02/26/1984',
                      (date(1982, 6, 27), '%Y.%m.%d'), None, "Not a date at all.",
-                     valerrtest, overflowtest
-                     )
-        result_list = ('today', 'tomorrow', 'yesterday', someday_result, '02/26/1984',
-                       date(1982, 6, 27).strftime(
-                           '%Y.%m.%d'), None, "Not a date at all.",
-                       valerrtest, overflowtest
-                       )
+                     valerrtest, overflowtest)
+        result_list = ('today', 'tomorrow', 'yesterday', someday_result,
+                       '02/26/1984', date(1982, 6, 27).strftime('%Y.%m.%d'),
+                       None, "Not a date at all.", valerrtest, overflowtest)
         self.assertManyResults(time.naturalday, test_list, result_list)
 
     def test_naturaldate(self):
@@ -292,3 +290,12 @@ class TimeTestCase(HumaniceTestCase):
         result_list = ('today', 'tomorrow', 'yesterday',
                        someday_result, 'Jun 27 1982')
         self.assertManyResults(time.naturaldate, test_list, result_list)
+
+        self.assertEqual(time.naturaldate(10), 10)
+
+        mock_date = namedtuple("Date", "year month day")
+        fake_date = mock_date(2019, 13, 1)
+        self.assertEqual(time.naturaldate(fake_date), fake_date)
+
+        fake_date = mock_date(10000000000, 12, 1)
+        self.assertEqual(time.naturaldate(fake_date), fake_date)

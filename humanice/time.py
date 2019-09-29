@@ -75,7 +75,7 @@ def naturaldelta(value, months=True):
             return ngettext("%d minute", "%d minutes", minutes) % minutes
         elif 3600 <= seconds < 3600 * 2:
             return _("an hour")
-        elif 3600 < seconds:
+        else:
             hours = seconds // 3600
             return ngettext("%d hour", "%d hours", hours) % hours
     elif years == 0:
