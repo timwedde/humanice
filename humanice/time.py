@@ -55,16 +55,27 @@ def naturaldelta(value, months=True):
 
     use_months = months
 
+    microseconds = abs(delta.microseconds)
+    milliseconds = microseconds / 1000
     seconds = abs(delta.seconds)
     days = abs(delta.days)
     years = days // 365
     days = days % 365
     months = int(days // 30.5)
 
-    if not years and days < 1:
-        if seconds == 0:
-            return _("a moment")
-        elif seconds == 1:
+    if not years and days < 1 and not seconds:
+        if microseconds == 0:
+            return _("less than a microsecond")
+        elif microseconds == 1:
+            return _("a microsecond")
+        elif microseconds < 1000:
+            return ngettext("%d microsecond", "%d microseconds", microseconds) % microseconds
+        elif milliseconds == 1:
+            return _("a millisecond")
+        else:
+            return ngettext("%d millisecond", "%d milliseconds", milliseconds) % milliseconds
+    elif not years and days < 1:
+        if seconds == 1:
             return _("a second")
         elif seconds < 60:
             return ngettext("%d second", "%d seconds", seconds) % seconds
@@ -125,7 +136,7 @@ def naturaltime(value, future=False, months=True):
     ago = _('%s from now') if future else _('%s ago')
     delta = naturaldelta(delta, months)
 
-    if delta == _("a moment"):
+    if delta == _("less than a microsecond"):
         return _("now")
 
     return ago % delta

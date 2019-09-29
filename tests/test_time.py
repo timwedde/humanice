@@ -93,9 +93,19 @@ class TimeTestCase(HumaniceTestCase):
             timedelta(days=9),
             timedelta(days=365),
             "NaN",
+            timedelta(seconds=0.5),
+            timedelta(seconds=0.1),
+            timedelta(seconds=0.01),
+            timedelta(seconds=0.001),
+            timedelta(seconds=0.0001),
+            timedelta(seconds=0.00001),
+            timedelta(seconds=0.000001),
+            timedelta(seconds=0.0000001),
+            timedelta(seconds=0.9),
+            timedelta(seconds=0.9999999),
         ]
         result_list = [
-            'a moment',
+            'less than a microsecond',
             'a second',
             '30 seconds',
             'a minute',
@@ -124,6 +134,16 @@ class TimeTestCase(HumaniceTestCase):
             '9 days',
             'a year',
             "NaN",
+            "500 milliseconds",
+            "100 milliseconds",
+            "10 milliseconds",
+            "a millisecond",
+            "100 microseconds",
+            "10 microseconds",
+            "a microsecond",
+            "less than a microsecond",
+            "900 milliseconds",
+            "a second",
         ]
         with patch('humanice.time._now') as mocked:
             mocked.return_value = now
