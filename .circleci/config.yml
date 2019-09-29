@@ -1,11 +1,9 @@
 version: 2.1
 
-jobs:
-  test:
-    docker:
-      - image: circleci/python:3.7
+commands:
+  build-and-test:
+    description: "Install, build and test the library"
     steps:
-      - checkout
       - run:
           name: "Install into environment"
           command: |
@@ -19,6 +17,26 @@ jobs:
           command: |
             poetry run coverage run --branch --source humanice -m pytest
             poetry run codecov -t "${CODECOV_TOKEN}"
+
+jobs:
+  test-37:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - build-and-test
+  test-36:
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - checkout
+      - build-and-test
+  test-35:
+    docker:
+      - image: circleci/python:3.5
+    steps:
+      - checkout
+      - build-and-test
 
   deploy:
     docker:
@@ -35,11 +53,25 @@ workflows:
 
     test-workflow:
       jobs:
-        - test
+        - test-37
+        - test-36
+        - test-35
 
     deploy-workflow:
       jobs:
-        - test:
+        - test-37:
+            filters:
+              tags:
+                only: /v[0-9]+(\.[0-9]+)*/
+              branches:
+                ignore: /.*/
+        - test-36:
+            filters:
+              tags:
+                only: /v[0-9]+(\.[0-9]+)*/
+              branches:
+                ignore: /.*/
+        - test-35:
             filters:
               tags:
                 only: /v[0-9]+(\.[0-9]+)*/
@@ -47,7 +79,9 @@ workflows:
                 ignore: /.*/
         - deploy:
             requires:
-              - test
+              - test-37
+              - test-36
+              - test-35
             filters:
               tags:
                 only: /v[0-9]+(\.[0-9]+)*/
