@@ -6,6 +6,13 @@
 This modest package contains various common humanization utilities, like turning a number into a fuzzy human readable duration (i.e. `3 minutes ago`) or into a human readable size or throughput. It works with Python 3 and is localized to a bunch of languages.
 
 
+## What and Why
+This is a fork of the original [humanize](https://github.com/jmoiron/humanize) library by Jason Moiron. Since it appears to have been abandoned (the last commit was in 2016), I decided to fork the project to further maintain it as this library is very handy. This fork currently integrates most of the open pull requests on the original repository and fixes most of the open issues.
+I've also decided to drop support for Python 2 as it's nearing EOL in 2020 and I'd like to focus on Python 3. The unit tests have been expanded to cover basically all of the codebase and I'll try to keep it that way. However, due to the large amount of changes, some breakage may occur.
+One of the big TODO-items currently is to get the translations back up to speed as I haven't touched them much while changing the code. As such please only treat the english version of `humanice` as "finalized" for now.
+The repository handles automatic unit testing, code coverage and deployment to PyPI via [CircleCi](https://circleci.com/).
+
+
 ## Installation
 
 `humanice` can be installed via pip:
@@ -13,11 +20,11 @@ This modest package contains various common humanization utilities, like turning
 $ pip install humanice
 ```
 
-Alternatively you can build the package by cloning this repository:
+Alternatively you can build the package by cloning this repository and installing via [poetry](https://github.com/sdispater/poetry):
 ```bash
 $ git clone https://github.com/timwedde/humanice.git
 $ cd humanice/
-$ python3 setupy.py install
+$ poetry install
 ```
 
 ## Usage
