@@ -40,8 +40,9 @@ class NumberTestCase(HumaniceTestCase):
         self.assertManyResults(number.intword, test_list, result_list)
 
     def test_apnumber(self):
-        test_list = (1, 2, 4, 5, 9, 10, '7', None)
-        result_list = ('one', 'two', 'four', 'five', 'nine', '10', 'seven', None)
+        test_list = (-1, 0, 1, 2, 4, 5, 9, 10, '7', None)
+        result_list = ("-1", "zero", 'one', 'two', 'four', 'five', 'nine', '10',
+                       'seven', None)
         self.assertManyResults(number.apnumber, test_list, result_list)
 
     def test_fractional(self):
