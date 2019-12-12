@@ -63,6 +63,10 @@ $ poetry install
 'a second ago'
 >>> humanice.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=3600))
 'an hour ago'
+>>> humanice.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=7000))
+'an hour ago'
+>>> humanice.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=7000), precise=True)
+'1.9 hours ago'
 ```
 
 ### Filesize humanization
