@@ -77,7 +77,9 @@ class TimeTestCase(HumaniceTestCase):
         ]
         with patch('humanice.time._now') as mocked:
             mocked.return_value = now
-            nd_nomonths_prec = lambda d: time.naturaldelta(d, months=False, precise=True)
+            nd_nomonths_prec = lambda d: time.naturaldelta(d,
+                                                           months=False,
+                                                           precise=True)
             self.assertManyResults(nd_nomonths_prec, test_list, result_list)
 
     def test_naturaldelta(self):
@@ -312,7 +314,7 @@ class TimeTestCase(HumaniceTestCase):
             now - timedelta(hours=23, minutes=50, seconds=50),
             now - timedelta(days=1),
             now - timedelta(days=500),
-            now - timedelta(days=365*2 + 35),
+            now - timedelta(days=365 * 2 + 35),
             now + timedelta(seconds=1),
             now + timedelta(seconds=30),
             now + timedelta(minutes=1, seconds=30),
@@ -321,12 +323,12 @@ class TimeTestCase(HumaniceTestCase):
             now + timedelta(hours=23, minutes=50, seconds=50),
             now + timedelta(days=1),
             now + timedelta(days=500),
-            now + timedelta(days=365*2 + 35),
+            now + timedelta(days=365 * 2 + 35),
             # regression tests for bugs in post-release humanize
             now + timedelta(days=10000),
-            now - timedelta(days=365+35),
+            now - timedelta(days=365 + 35),
             30,
-            now - timedelta(days=365*2 + 65),
+            now - timedelta(days=365 * 2 + 65),
             now - timedelta(days=365 + 4),
             "NaN",
         ]
