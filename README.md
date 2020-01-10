@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/timwedde/humanice.svg?style=svg)](https://circleci.com/gh/timwedde/humanice)
 [![codecov](https://codecov.io/gh/timwedde/humanice/branch/master/graph/badge.svg)](https://codecov.io/gh/timwedde/humanice)
+[![Downloads](https://pepy.tech/badge/humanice)](https://pepy.tech/project/humanice)
 
 This modest package contains various common humanization utilities, like turning a number into a fuzzy human readable duration (i.e. `3 minutes ago`) or into a human readable size or throughput. It works with Python 3 and is localized to a bunch of languages.
 
