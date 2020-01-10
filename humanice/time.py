@@ -37,7 +37,7 @@ def date_and_delta(value):
     else:
         try:
             if isinstance(value, str) and value.lower() == "nan":
-                return (now, None, value)
+                raise ValueError
             value = float(value)
             delta = timedelta(seconds=value)
             date = now - delta
