@@ -170,7 +170,7 @@ def naturaldelta_precise(value, months=True):
         elif 60 <= seconds < 3600:
             minutes = seconds / 60
             return _("%.1f minutes") % minutes
-        elif 3600 <= seconds:
+        else:
             hours = seconds / 3600
             return _("%.1f hours") % hours
     elif years == 0:
