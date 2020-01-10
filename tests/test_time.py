@@ -175,6 +175,10 @@ class TimeTestCase(HumaniceTestCase):
         now = datetime.now()
         test_list = [
             0,
+            0.000001,
+            0.0001,
+            0.001,
+            0.1,
             1,
             30,
             timedelta(minutes=1, seconds=30),
@@ -207,6 +211,10 @@ class TimeTestCase(HumaniceTestCase):
         ]
         result_list = [
             'less than a microsecond',
+            'a microsecond',
+            '100 microseconds',
+            'a millisecond',
+            '100 milliseconds',
             '1.0 seconds',
             '30.0 seconds',
             '1.5 minutes',
