@@ -24,6 +24,16 @@ class NumberTestCase(HumaniceTestCase):
                        '1,000,000', '1,234,567.1234567', None)
         self.assertManyResults(number.intcomma, test_list, result_list)
 
+    def test_intcomma_ndigits(self):
+        test_list = ((14308.40, None), (14308.40, 1), (14308.40, 2),
+                     (14308.40, 3), (1234.5454545,), (1234.5454545, None),
+                     (1234.5454545, 1), (1234.5454545, 2), (1234.5454545, 3),
+                     (1234.5454545, 10))
+        result_list = ("14,308.4", "14,308.4", "14,308.40",
+                       "14,308.400", "1,234.5454545", "1,234.5454545",
+                       "1,234.5", "1,234.55", "1,234.545", "1,234.5454545000")
+        self.assertManyResults(number.intcomma, test_list, result_list)
+
     def test_intword(self):
         # make sure that powers & human_powers have the same number of items
         self.assertEqual(len(number.powers), len(number.human_powers))
