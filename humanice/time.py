@@ -143,11 +143,11 @@ def naturaldelta_precise(value, months=True):
     use_months = months
 
     microseconds = abs(delta.microseconds)
-    milliseconds = microseconds / 1000
+    milliseconds = microseconds / 1000.0
     seconds = abs(delta.seconds)
     days = abs(delta.days)
     years = days // 365
-    years_float = days / 365
+    years_float = days / 365.0
     days = days % 365
     months = int(days // 30.5)
 
@@ -168,10 +168,10 @@ def naturaldelta_precise(value, months=True):
         if seconds < 60:
             return _("%.1f seconds") % seconds
         elif 60 <= seconds < 3600:
-            minutes = seconds / 60
+            minutes = seconds / 60.0
             return _("%.1f minutes") % minutes
         else:
-            hours = seconds / 3600
+            hours = seconds / 3600.0
             return _("%.1f hours") % hours
     elif years == 0:
         if not use_months:
