@@ -9,7 +9,7 @@ repository = "https://github.com/timwedde/humanice"
 homepage = "https://github.com/timwedde/humanice"
 
 [tool.poetry.dependencies]
-python = "^3.5"
+python = "^3.6"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7"
